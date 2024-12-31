@@ -135,7 +135,7 @@ function updateHighScore(){
 }
 
 let changeShadow = ()=>{
-    if(match == 0)'0 10px 20px #0d614e';{
+    if(match == 0){
         container.style.boxShadow = 'none';
     }
     if(match == 2){
