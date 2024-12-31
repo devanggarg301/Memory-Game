@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Salsa&display=swap');
+
+
+body{
+    background-color: #093a2f;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    background-color: #0d614e;
+    width: 40vw;
+    height: 90vh;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+
+h1{
+    color: #fff;
+    font-size: 3vw;
+    margin: 0;
+    font-family: 'Salsa', cursive;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(4,6vw);
+    grid-template-rows: repeat(4,13vh);
+    padding: 20px;
+    gap: 10px;
+    margin-top:2px;
+}
+
+.card{
+    background-color: #229b7f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3vw;
+    content: '⬆️';
+    transition: 0.5s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button{
+    background-color: #fff;
+    color: #264c3d;
+    border: none;
+    outline: none;
+    font-weight: 700;
+    font-size: 1.2vw;
+    padding: 1vw;
+    cursor: pointer;
+    font-family: 'Salsa', cursive;
+}
+
+button:hover{
+    background-color: #ffffffd2;
+}
+.info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    font-size: 16px;
+    color: #fff;
+}
+.timer{
+    text-align: left;
+}
+.guesses{
+    text-align: right;
+}
+.high{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    color:#fff;
+    font-size:2.4vh;
+}
+.highTimer{
+    margin:0;
+}
