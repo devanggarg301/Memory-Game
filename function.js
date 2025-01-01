@@ -1,4 +1,3 @@
-let emojis = ["😍", "🥲", "😎", "😭", "🤡", "💖", "💥", "✌", "😍", "🥲", "😎", "😭", "🤡", "💖", "💥", "✌"]
 
 const grid = document.querySelector(".grid")
 const container = document.querySelector(".grid")
@@ -6,6 +5,17 @@ const reset = document.querySelector("button")
 const guesses = document.querySelector("#guess")
 const timer = document.querySelector("#time")
 const high = document.querySelector(".highTimer")
+const hard = document.querySelector(".hardMode")
+hardMode = false;
+let emojis;
+let updateEmojis = ()=>{
+    if(!hardMode){
+    emojis = ["😍", "🥲", "😎", "😭", "🤡", "💖", "💥", "✌", "😍", "🥲", "😎", "😭", "🤡", "💖", "💥", "✌"]
+    }
+    if(hardMode){
+        emojis = ["red", "red", "green", "green", "blue", "blue", "yellow", "yellow", "purple", "purple", "orange", "orange", "pink", "pink", "turquoise", "turquoise"]
+    }
+}
 var lastClickedDiv = null
 let timer_start = false;
 let guess = 0;
@@ -25,19 +35,26 @@ const shuffleEmojis = () => {
     }
 }
 
-const reveal = (card, emoji) => {
+    let reveal = (card, emoji) => {
+    if(!hardMode){
     card.style.backgroundColor = "#fff"
     card.style.transform = "rotateY(180deg)"
     card.innerText = emoji
+    }else{
+    card.style.backgroundColor = emoji
+    card.innerText = emoji
+    card.style.color = "transparent"
+    card.style.transform = "rotateY(180deg)"
+        }
 }
-
 const cover = (card) => {
     card.style.backgroundColor = "#229b7f"
     card.style.transform = "rotateY(0deg)"
     card.innerText = ""
+    // card.style.color = "";
 }
-
 const createCards = () => {
+    grid.innerHTML = "";
     shuffleEmojis()
     for (let x = 0; x < 16; x++) {
         const div = document.createElement("div")
@@ -70,13 +87,11 @@ const createCards = () => {
                         changeShadow();
                         if(match==16){
                             clearInterval(interval);
-                            if(min<=highMin){
+                            if(min<highMin){
                                 highMin = min<10?`0${min}`:min;
-                                highSec = sec<10?`0${sec}`:sec;
-                            }else{
-                                if(sec<=highSec){
+                                highSec = sec<10?`0${sec-1}`:sec-1;
+                            }else if( min==highMin&&sec<=highSec){
                                     highSec = sec<10?`0${sec}`:sec;
-                                }
                             }
                             updateHighScore();
                             
@@ -111,6 +126,7 @@ reset.addEventListener("click", () => {
     })
 })
 
+updateEmojis();
 createCards();
 
 function updateText(guess){
@@ -131,7 +147,7 @@ if(timer_start){
     },1000);    
 }}
 function updateHighScore(){
-    high.innerText = `HighScore: ${highMin}:${highSec-1}`;
+    high.innerText = `HighScore: ${highMin}:${highSec}`;
 }
 
 let changeShadow = ()=>{
@@ -163,3 +179,24 @@ let changeShadow = ()=>{
         container.style.boxShadow = '0 10px 20px rgba(102, 204, 170, 0.9)';
     }
 }
+hard.addEventListener("click",()=>{
+    hardMode = !hardMode;
+    hard.innerText = hardMode?"NORMAL MODE":"HARD MODE";
+    updateEmojis();
+    createCards();
+    shuffleEmojis()
+    guess = 0;
+    match = 0;
+    changeShadow();
+    sec = 0;
+    min = 0;
+    clearInterval(interval);
+    timer.innerText = `TIMER: 00:00`;
+    timer_start = false;
+    updateText(guess);
+    const cards = Array.from(grid.querySelectorAll(".card"))
+    cards.forEach((card) => {
+        cover(card)
+    })
+    lastClickedDiv = null
+});
