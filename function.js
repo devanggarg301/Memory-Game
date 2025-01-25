@@ -59,9 +59,11 @@ const createCards = () => {
     for (let x = 0; x < 16; x++) {
         const div = document.createElement("div")
         div.classList.add("card")
+        div.dataset.matched = "false"
         grid.appendChild(div)
 
         div.addEventListener("click", () => {
+            if (div.dataset.matched === "true") return;
             if(!timer_start){
                 timer_start = true;
                 startTimer();
@@ -84,6 +86,8 @@ const createCards = () => {
 
                     }else{
                         match+=2;
+                        div.dataset.matched = "true"
+                        lastClickedDiv.dataset.matched = "true"
                         changeShadow();
                         if(match==16){
                             clearInterval(interval);
@@ -123,6 +127,7 @@ reset.addEventListener("click", () => {
     const cards = Array.from(grid.querySelectorAll(".card"))
     cards.forEach((card) => {
         cover(card)
+        card.dataset.matched = "false"
     })
 })
 
