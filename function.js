@@ -1,4 +1,4 @@
-
+// note: if two cards are matched, dont touch them again while guessing other cards
 const grid = document.querySelector(".grid")
 const container = document.querySelector(".grid")
 const reset = document.querySelector("button")
